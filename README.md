@@ -5,6 +5,7 @@ Proyecto para la materia de seminario de sistemas computacionales de la carrera 
 ## Instalaciones necesarias
 
 [Node.js](https://nodejs.org/en/download/current/)
+
 [TypeScript](http://www.typescriptlang.org/#download-links)
 
 ## Dependencias de Node.js

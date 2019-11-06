@@ -19,7 +19,7 @@ export const base64 = (nombreImagen: string) => {
     }
     formatoArray = nombreImagen.split('.');
     formato = formatoArray[formatoArray.length - 1];
-    imagenBase64 = fs.readFileSync(pathImagen, {encoding: 'base64'});
+    imagenBase64 = fs.readFileSync(pathImagen, { encoding: 'base64' });
     return `data:image/${formato};base64,${imagenBase64}`;
 }
 

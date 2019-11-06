@@ -1,11 +1,11 @@
-import {borrarArchivo, base64} from '../tools/tools';
-import  {verificarImagen} from '../middlewares/middlewares';
-import fileUpload, {UploadedFile} from 'express-fileupload';
+import { borrarArchivo, base64 } from '../tools/tools';
+import { verificarImagen } from '../middlewares/middlewares';
+import fileUpload, { UploadedFile } from 'express-fileupload';
 import path from 'path';
-import express, {Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 const app = express();
 
-app.use(fileUpload({useTempFiles: true}));
+app.use(fileUpload({ useTempFiles: true }));
 
 app.post('/imagen', [verificarImagen], (req: Request, res: Response) => {
     if (!req.files) {

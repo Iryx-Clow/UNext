@@ -1,8 +1,10 @@
 import express from 'express';
 import socketIO from 'socket.io';
+import mongoose, { Connection } from 'mongoose';
 import http from 'http';
 import path from 'path';
 import * as socket from '../sockets/socket';
+import { MongoError } from 'mongodb';
 
 export default class Server {
 
@@ -21,13 +23,14 @@ export default class Server {
         this.httpServer = http.createServer(this.app);
         this.io = socketIO(this.httpServer);
         this.escucharSockets();
+        this.iniciarConexionBD();
     }
 
-    public static get instance() {
+    public static get instance(): Server {
         return this._instance || (this._instance = new Server());
     }
 
-    private escucharSockets() {
+    private escucharSockets(): void {
         this.io.on('connection', cliente => {
             // Siguiente Ticket
             socket.siguienteTicket(cliente);
@@ -41,8 +44,23 @@ export default class Server {
 
     }
 
-    public start(callback: VoidFunction) {
+    public start(callback: VoidFunction): void {
         this.httpServer.listen(this.port, callback);
+    }
+
+    private iniciarConexionBD(): void {
+        const mongoURI = "mongodb://admin:Sip8Ut4EwR$2@74.208.24.47";
+        mongoose.connect(mongoURI, {
+            useNewUrlParser: true,
+            useFindAndModify: false,
+            useCreateIndex: true,
+            useUnifiedTopology: true,
+            dbName: 'UNext'
+        }).then(
+            () => console.log('Base de datos online')
+        ).catch(
+            (err: MongoError) => console.log('Error en la conexión a la base de datos', err.message)
+        );
     }
 
 }

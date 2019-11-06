@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 
 export class Ticket {
     public constructor(public numero: number,

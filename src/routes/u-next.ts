@@ -1,5 +1,5 @@
-import express, {Request, Response} from 'express';
-import {base64} from '../tools/tools';
+import express, { Request, Response } from 'express';
+import { base64 } from '../tools/tools';
 import path from 'path';
 import handlebars from 'hbs';
 const app = express();
@@ -14,7 +14,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get('/configuracion', (req: Request, res: Response) => {
     const img = base64('temporal.png');
-    res.render('configuracion', {img});
+    res.render('configuracion', { img });
 });
 
 app.get('/escritorio', (req: Request, res: Response) => {
