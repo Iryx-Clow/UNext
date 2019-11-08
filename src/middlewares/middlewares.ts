@@ -25,4 +25,4 @@ export const verificarImagen = (req: Request, res: Response, next: NextFunction)
     }
     req.formatoImagen = formatoImagen;
     next();
-}
+};

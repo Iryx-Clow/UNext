@@ -1,3 +1,5 @@
+import bodyParser from 'body-parser';
+import expressSession from 'express-session';
 import express from 'express';
 import socketIO from 'socket.io';
 import mongoose, { Connection } from 'mongoose';
@@ -17,6 +19,14 @@ export default class Server {
     private constructor() {
         this.app = express();
         this.app.set('view engine', 'hbs');
+        this.app.use(bodyParser.urlencoded({extended: true}));
+        this.app.use(bodyParser.json());
+        this.app.use(expressSession({
+            name: 'u-next',
+            resave: false,
+            saveUninitialized: true,
+            secret: 'ce_SEVt5d9#eWs5B2QkD8PweX'
+        }));
         this.app.use(require('../routes/index'));
         this.app.use(express.static(path.resolve(__dirname, '../public')));
         this.port = 3000;

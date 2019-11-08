@@ -25,9 +25,7 @@ app.post('/imagen', [verificarImagen], (req: Request, res: Response) => {
                 err
             });
         }
-        res.writeHead(301, {
-            Location: 'configuracion'
-        });
+        res.redirect('/configuracion');
         res.end();
     });
 });
