@@ -69,7 +69,7 @@ export default class Server {
         }).then(
             () => console.log('Base de datos online')
         ).catch(
-            (err: MongoError) => console.log('Error en la conexión a la base de datos', err.message)
+            (err: MongoError) => console.error('Error en la conexión a la base de datos', err.message)
         );
     }
 
