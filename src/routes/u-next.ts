@@ -45,6 +45,7 @@ app.post('/inicio-de-sesion', (req: Request, res: Response) => {
         }
         if (String(sha256(req.body.contrasena)) === cuenta.contrasena) {
             req!.session!.clave = new Schema.Types.ObjectId('6e60dcb9c906c7f5a1325ad6d347f3cd328faf1ac85972af36bfa6c6009d0e5c');
+            req!.session!.nombreUsuario = req.body.nombreUsuario;
             res.redirect('/index');
             res.end();
         } else {
