@@ -2,9 +2,8 @@ import mongoose, { Schema, Document } from 'mongoose';
 const autopopulate = require('mongoose-autopopulate');
 
 export interface ITurno extends Document {
-    _id: Schema.Types.ObjectId,
-    idCuenta: Schema.Types.ObjectId,
-    idEscritorio: Schema.Types.ObjectId,
+    idCuenta: string,
+    idEscritorio: string | null,
     clave: string,
     fechaRegistro: Date
 }
@@ -17,8 +16,7 @@ const turnoSchema = new Schema({
     },
     idEscritorio: {
         type: Schema.Types.ObjectId,
-        ref: 'Escritorio',
-        required: [true, 'El ID del escritorio es obligatorio']
+        ref: 'Escritorio'
     },
     clave: {
         type: String,

@@ -2,8 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 const autopopulate = require('mongoose-autopopulate');
 
 export interface IEscritorio extends Document {
-    _id: Schema.Types.ObjectId,
-    idCuenta: Schema.Types.ObjectId,
+    idCuenta: string,
     nombre: string,
     activo: boolean,
     fechaRegistro: Date

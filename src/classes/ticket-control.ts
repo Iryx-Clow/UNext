@@ -1,8 +1,13 @@
+import Turno from '../models/turno';
+import { Schema } from 'mongoose';
+
 export class Ticket {
 
-    public constructor(public numero: number,
-        public escritorio: number | null,
-        public empresa: string) { }
+    public constructor(public id: string | null,
+        public idCuenta: string,
+        public idEscritorio: string | null,
+        public clave: string,
+        public fechaRegistro: Date) { }
 
 }
 
@@ -18,22 +23,25 @@ export class TicketControl {
         this._hoy = new Date().getDate();
         this._tickets = [];
         this._ultimos4 = [];
-        let data = require('../data/data.json');
-        if (data.hoy === this._hoy) {
-            this._ultimo = data.ultimo;
-            this._tickets = data.tickets;
-            this._ultimos4 = data.ultimos4;
-        } else {
-            this.reiniciarConteo();
-        }
     }
 
-    public get siguiente(): string {
-        this._ultimo += 1;
-        let ticket = new Ticket(this._ultimo, null, this._empresa);
-        this._tickets.push(ticket);
-        // this.grabarArchivo();
-        return `Ticket ${this._ultimo}`;
+    public async getSiguiente(): Promise<string> {
+        try {
+            this._ultimo += 1;
+            let turno = {
+                idCuenta: this._empresa,
+                idEscritorio: null,
+                clave: `${this._ultimo}`,
+                fechaRegistro: new Date()
+            };
+            let turnoDB = await new Turno(turno).save();
+            let ticket = new Ticket(turnoDB._id, turnoDB.idCuenta, turnoDB.idEscritorio, turnoDB.clave, turnoDB.fechaRegistro);
+            this._tickets.push(ticket);
+            return `Ticket ${ticket.clave}`;
+        } catch (err) {
+            console.log(err);
+            return 'Error al generar ticket, contacte al equipo de soporte';
+        }
     }
 
     public get ultimoTicket(): string {
@@ -48,26 +56,25 @@ export class TicketControl {
         return this._empresa;
     }
 
-    public atenderTicket(escritorio: number): Ticket | string {
-        if (this._tickets.length === 0) {
-            return 'No hay tickets';
+    public async atenderTicket(escritorio: string): Promise<Ticket | string> {
+        try {
+            let atenderTicket = this._tickets.shift();
+            if (!atenderTicket) {
+                return 'No hay tickets';
+            }
+            atenderTicket.idEscritorio = escritorio;
+            let turnoDB = await Turno.findOneAndUpdate({ _id: atenderTicket.id }, { idEscritorio: atenderTicket.idEscritorio });
+            if (!turnoDB) {
+                return 'Error al atender ticket, contacte al equipo de soporte';
+            }
+            this._ultimos4.unshift(atenderTicket);
+            if (this._ultimos4.length > 4) {
+                this._ultimos4.pop();
+            }
+            return atenderTicket;
+        } catch (err) {
+            return 'Error al atender ticket, contacte al equipo de soporte';
         }
-        let numeroTicket: number = this._tickets[0].numero;
-        this._tickets.shift();
-        let atenderTicket: Ticket = new Ticket(numeroTicket, escritorio, this._empresa);
-        this._ultimos4.unshift(atenderTicket);
-        if (this._ultimos4.length > 4) {
-            this._ultimos4.splice(-1, 1);
-        }
-        // this.grabarArchivo();
-        return atenderTicket;
-    }
-
-    public reiniciarConteo(): void {
-        this._ultimo = 0;
-        this._tickets = [];
-        this._ultimos4 = [];
-        // this.grabarArchivo();
     }
 
 }

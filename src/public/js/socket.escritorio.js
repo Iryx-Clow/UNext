@@ -24,6 +24,6 @@ $('button').on('click', function () {
             alert(resp);
             return;
         }
-        label.text('Ticket ' + resp.numero);
+        label.text('Ticket ' + resp.clave);
     });
 });

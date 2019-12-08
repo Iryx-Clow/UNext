@@ -2,7 +2,6 @@ import express, {Request, Response} from 'express';
 import {base64} from '../tools/tools';
 import path from 'path';
 import handlebars from 'hbs';
-import {model, Schema} from "mongoose";
 import Cuenta from '../models/cuenta';
 import {ICuenta} from "../models/cuenta";
 import { validarSesion } from '../middlewares/middlewares';

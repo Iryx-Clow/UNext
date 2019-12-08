@@ -2,7 +2,6 @@ import mongoose, { Schema, Document } from 'mongoose';
 const autopopulate = require('mongoose-autopopulate');
 
 export interface ICuenta extends Document {
-    _id: Schema.Types.ObjectId,
     nombreUsuario: string,
     contrasena: string,
     nombreEmpresa: string,

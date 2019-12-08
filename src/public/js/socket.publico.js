@@ -24,14 +24,12 @@ socket.on('estadoActual', function (data) {
 
 socket.on('ultimos4', function (data) {
     console.log(data);
-    var audio = new Audio('audio/new-ticket.mp3');
-    audio.play();
     actualizaHTML(data.ultimos4);
 });
 
 function actualizaHTML(ultimos4) {
     for (var i = 0; i <= ultimos4.length - 1; i++) {
-        lblTickets[i].text('Ticket ' + ultimos4[i].numero);
-        lblEscritorios[i].text('Escritorio ' + ultimos4[i].escritorio);
+        lblTickets[i].text('Ticket ' + ultimos4[i].clave);
+        lblEscritorios[i].text('Escritorio ' + ultimos4[i].idEscritorio);
     }
 }
