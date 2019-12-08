@@ -31,7 +31,8 @@ app.get('/index', (req: Request, res: Response) => {
 });
 
 app.get('/inicio-de-sesion', (req: Request, res: Response) => {
-    res.render('inicio-de-sesion');
+    const img = base64('favicon.png');
+    res.render('inicio-de-sesion', {img});
 });
 
 app.post('/inicio-de-sesion', (req: Request, res: Response) => {
