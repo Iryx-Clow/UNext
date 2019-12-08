@@ -26,3 +26,10 @@ export const verificarImagen = (req: Request, res: Response, next: NextFunction)
     req.formatoImagen = formatoImagen;
     next();
 };
+
+export const validarSesion = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.session!.empresa) {
+        return res.redirect('/inicio-de-sesion');
+    }
+    next();
+}

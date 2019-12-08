@@ -1,34 +1,29 @@
-// Comando para establecer la conexión
 var socket = io();
+var params = new URLSearchParams(window.location.search);
 
-
-var searchParams = new URLSearchParams(window.location.search);
-
-if (!searchParams.has('escritorio')) {
-    window.location = '/';
-    throw new Error('El escritorio es necesario');
+if (!params.has('escritorio')) {
+    window.location = 'index';
+    throw new Error('La empresa/escritorio es necesario');
 }
 
-var escritorio = searchParams.get('escritorio');
+var escritorio = params.get('escritorio');
 var label = $('small');
 
-
-console.log(escritorio);
 $('h1').text('Escritorio ' + escritorio);
 
+socket.on('connect', function () {
+    socket.emit('entrarEmpresa', function (resp) {
+        console.log(resp.message);
+    });
+});
 
 $('button').on('click', function () {
-
-    socket.emit('atenderTicket', {escritorio: escritorio}, function (resp) {
-
+    socket.emit('atenderTicket', { escritorio: escritorio }, function (resp) {
         if (resp === 'No hay tickets') {
             label.text(resp);
             alert(resp);
             return;
         }
-
         label.text('Ticket ' + resp.numero);
-
     });
-
 });

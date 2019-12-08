@@ -1,18 +1,19 @@
-import fs from 'fs';
-
 export class Ticket {
+
     public constructor(public numero: number,
-        public escritorio: number | null) { }
+        public escritorio: number | null,
+        public empresa: string) { }
+
 }
 
-export default class TicketControl {
+export class TicketControl {
 
     private _ultimo: number;
     private _hoy: number;
     private _tickets: Ticket[];
     private _ultimos4: Ticket[];
 
-    public constructor() {
+    public constructor(private _empresa: string) {
         this._ultimo = 0;
         this._hoy = new Date().getDate();
         this._tickets = [];
@@ -29,9 +30,9 @@ export default class TicketControl {
 
     public get siguiente(): string {
         this._ultimo += 1;
-        let ticket = new Ticket(this._ultimo, null);
+        let ticket = new Ticket(this._ultimo, null, this._empresa);
         this._tickets.push(ticket);
-        this.grabarArchivo();
+        // this.grabarArchivo();
         return `Ticket ${this._ultimo}`;
     }
 
@@ -43,18 +44,22 @@ export default class TicketControl {
         return this._ultimos4;
     }
 
+    public get empresa(): string {
+        return this._empresa;
+    }
+
     public atenderTicket(escritorio: number): Ticket | string {
         if (this._tickets.length === 0) {
             return 'No hay tickets';
         }
         let numeroTicket: number = this._tickets[0].numero;
         this._tickets.shift();
-        let atenderTicket: Ticket = new Ticket(numeroTicket, escritorio);
+        let atenderTicket: Ticket = new Ticket(numeroTicket, escritorio, this._empresa);
         this._ultimos4.unshift(atenderTicket);
         if (this._ultimos4.length > 4) {
             this._ultimos4.splice(-1, 1);
         }
-        this.grabarArchivo();
+        // this.grabarArchivo();
         return atenderTicket;
     }
 
@@ -62,18 +67,24 @@ export default class TicketControl {
         this._ultimo = 0;
         this._tickets = [];
         this._ultimos4 = [];
-        this.grabarArchivo();
+        // this.grabarArchivo();
     }
 
-    grabarArchivo() {
-        let jsonData = {
-            ultimo: this._ultimo,
-            hoy: this._hoy,
-            tickets: this._tickets,
-            ultimos4: this._ultimos4
-        };
-        let jsonDataString = JSON.stringify(jsonData);
-        fs.writeFileSync('./dist/data/data.json', jsonDataString);
+}
+
+export default class TicketControlList {
+
+    private list: TicketControl[] = [];
+
+    public nuevaEmpresa(empresa: string): void {
+        let ticketEmpresa = this.list.filter(t => t.empresa === empresa);
+        if (ticketEmpresa.length === 0) {
+            this.list.push(new TicketControl(empresa));
+        }
+    }
+
+    public getTicketsEmpresa(empresa: string): TicketControl {
+        return this.list.filter(t => t.empresa === empresa)[0];
     }
 
 }
