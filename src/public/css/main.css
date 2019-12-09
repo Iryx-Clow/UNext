@@ -7,10 +7,30 @@ body {
     width: 100%;
 }
 
+body.padding-top-fix {
+    padding-top: 4.5rem;
+}
+
 .bg-main-color {
     background:#2E53A3;
 }
 
+.bg-secondary-color {
+    background: #fafafa;
+}
+
 .text-small {
     font-size: 0.75rem;;
+}
+
+.responsive-split-border {
+    border-bottom: 0 !important;
+    border-right: 1px solid #dee2e6 !important;
+}
+
+@media (max-width: 767.98px) {
+    .responsive-split-border {
+        border-right: 0 !important;
+        border-bottom: 1px solid #dee2e6 !important;
+    }
 }

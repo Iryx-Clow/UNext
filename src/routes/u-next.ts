@@ -27,11 +27,12 @@ app.get('/escritorio', (req: Request, res: Response) => {
 });
 
 app.get('/index', (req: Request, res: Response) => {
-    res.render('index');
+    const img = base64('favicon2.png');
+    res.render('index', {img});
 });
 
 app.get('/inicio-de-sesion', (req: Request, res: Response) => {
-    const img = base64('favicon.png');
+    const img = base64('favicon2.png');
     res.render('inicio-de-sesion', {img});
 });
 
@@ -57,7 +58,8 @@ app.post('/inicio-de-sesion', (req: Request, res: Response) => {
 });
 
 app.get('/nuevo-ticket', (req: Request, res: Response) => {
-    res.render('nuevo-ticket');
+    const img = base64('favicon2.png');
+    res.render('nuevo-ticket', {img});
 });
 
 app.get('/publico', (req: Request, res: Response) => {
