@@ -10,24 +10,25 @@ if (!searchParams.has('escritorio')) {
 }
 
 var escritorio = searchParams.get('escritorio');
-var label = $('small');
+var ticketEnAtencion = $('#ticketEnAtencion');
+var numeroDeTicketEnAtencion = $('#numeroDeTicketEnAtencion');
 
 
 console.log(escritorio);
-$('h1').text('Escritorio ' + escritorio);
+$('#numeroEscritorio').text('Escritorio ' + escritorio);
 
 
 $('button').on('click', function () {
 
     socket.emit('atenderTicket', {escritorio: escritorio}, function (resp) {
-
         if (resp === 'No hay tickets') {
-            label.text(resp);
-            alert(resp);
+            ticketEnAtencion.text('No se esta atendiendo a ningún ticket');
+            numeroDeTicketEnAtencion.text('');
+            alert('No hay tickets para ser atendidos.');
             return;
         }
-
-        label.text('Ticket ' + resp.numero);
+        ticketEnAtencion.text('Atendiendo al ');
+        numeroDeTicketEnAtencion.text('Ticket ' + resp.numero);
 
     });
 
