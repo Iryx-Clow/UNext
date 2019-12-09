@@ -19,20 +19,30 @@ app.get('/', [validarSesion], (req: Request, res: Response) => {
 
 app.get('/configuracion', [validarSesion], async (req: Request, res: Response) => {
     const empresa = await Cuenta.findOne({ _id: req.session!.empresa });
-    const img = base64(empresa!.imagenEmpresa);
-    res.render('configuracion', { img });
+    const imgConfiguracion = base64(empresa!.imagenEmpresa);
+    const img = base64('favicon2.png');
+    res.render('configuracion', {imgConfiguracion, img, active: {Configuracion: true }});
 });
 
+app.get('/escritorios', [validarSesion], (req: Request, res: Response) => {
+    const img = base64('favicon2.png');
+    res.render('escritorios', {img, active: {Escritorios: true }, escritorios: [{nombre: 1},{nombre: 2},{nombre: 3},{nombre: 4},{nombre: 5}]});
+});
+
+
 app.get('/escritorio', [validarSesion], (req: Request, res: Response) => {
-    res.render('escritorio');
+    const img = base64('favicon2.png');
+    res.render('escritorio', {img});
 });
 
 app.get('/index', [validarSesion], (req: Request, res: Response) => {
-    res.render('index');
+    const img = base64('favicon2.png');
+    res.render('index', {img, active: {Inicio: true }});
 });
 
 app.get('/inicio-de-sesion', (req: Request, res: Response) => {
-    res.render('inicio-de-sesion');
+    const img = base64('favicon2.png');
+    res.render('inicio-de-sesion', {img});
 });
 
 app.post('/inicio-de-sesion', (req: Request, res: Response) => {
@@ -57,11 +67,17 @@ app.post('/inicio-de-sesion', (req: Request, res: Response) => {
 });
 
 app.get('/nuevo-ticket', [validarSesion], (req: Request, res: Response) => {
-    res.render('nuevo-ticket');
+    const img = base64('favicon2.png');
+    res.render('nuevo-ticket', {img});
 });
 
 app.get('/publico', [validarSesion], (req: Request, res: Response) => {
     res.render('publico');
+});
+
+app.get('/detalles-ticket', (req: Request, res: Response) => {
+    const img = base64('favicon2.png');
+    res.render('detalles-ticket', {img});
 });
 
 export = app;

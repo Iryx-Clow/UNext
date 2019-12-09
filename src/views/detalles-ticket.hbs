@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-    {{> head title='Escritorio'}}
+<html lang="en">
+    {{> head title='Detalles de ticket'}}
     <body class="bg-main-color">
         <div class="wrapper h-100">
             <div id="content" class="d-flex align-items-center pb-5 pt-5 h-100 text-center">
@@ -12,15 +12,11 @@
                             </div>
                             <div class="pl-md-4 col-md-8 col-12 mt-3 mt-md-0 d-flex align-items-center">
                                 <div class="w-100">
-                                    <h1 class="h3 mb-3 font-weight-normal" id="numeroEscritorio">
-                                        Cargando escritorio...
+                                    <h1 class="h3 mb-3 font-weight-normal" id="lblDetallesTicket">
+                                        Ticket 845
                                     </h1>
-                                    <p class="font-weight-normal">
-                                        <span id="ticketEnAtencion">No se esta atendiendo a ningún ticket</span><b id="numeroDeTicketEnAtencion"></b>
-                                    </p>
-                                    <button class="btn btn-lg btn-warning btn-block">
-                                        Atender siguiente ticket
-                                    </button>
+                                    <p>El turno <b>831</b> esta siendo atendido.</p>
+                                    <p>Aproximadamente en <b>27 minutos</b> seguirá tu turno.</p>
                                 </div>
                             </div>
                         </div>
@@ -29,8 +25,5 @@
             </div>
         </div>
         {{> scripts}}
-        <script src="socket.io/socket.io.js"></script>
-        <script src="js/socket.escritorio.js"></script>
     </body>
 </html>
-

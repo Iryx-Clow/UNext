@@ -1,52 +1,39 @@
 <!DOCTYPE html>
 <html>
-
 {{> head title='Configuración'}}
-
-<body>
-
-{{> navbar}}
-
-<div id="top"></div>
-<div class="wrapper">
-    <div id="content">
-
-        <div class="container" style="padding-top: 70px;">
-            <h2>Configuración del sistema</h2>
-            <p>A continuación, puede editar la configuración del sistema de acuerdo a sus necesidades.</p>
-
-            <div class="line"></div>
-
-            <h2 id="actImg">Actualizar Imágen</h2>
-            <p>Seleccione una imágen o logotipo de su empresa que será mostrado en distintas partes del sistema para
-                que sus clientes puedan identificar su negocio.</p>
-            <div class="d-flex justify-content-center">
-                <div class="card border-dark">
-                    <img src="{{ img }}" class="card-img-top" style="max-width:450px;">
-                    <div id="imagePreview"></div>
-                    <div class="card-body">
+    <body class="bg-secondary-color padding-top-fix">
+    {{> navbar}}
+    <div id="top"></div>
+    <div class="wrapper h-100">
+        <div id="content" class="d-flex align-items-center justify-content-center pb-5 pt-5 h-100">
+            <div class="w-100">
+                <div class="responsive-card">
+                    <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
+                        <h1 class="h3 mb-3 font-weight-normal text-center w-100">
+                            Imágen actual
+                        </h1>
+                        <div class="pr-5 pl-5">
+                            <img src="{{ imgConfiguracion }}" alt="" class="w-100 mb-3">
+                        </div>
+                        <div id="imagePreview" class="pr-5 pl-5"></div>
                         <form action="imagen" method="POST" enctype="multipart/form-data">
-                            <h5>Imágen actual</h5>
                             <div class="form-group">
-                                <label for="img">Suba o actualice la imágen de su empresa aquí</label>
-                                <input type="file" class="form-control-file" id="img" name="imagen"
-                                       onchange="return fileValidation()">
+                                <label for="img">Suba o actualice la imágen de su empresa aquí.</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="img" name="imagen" onchange="return fileValidation()" required>
+                                    <label class="custom-file-label" for="validatedCustomFile">Elegir archivo...</label>
+                                </div>
                             </div>
-                            <button class="btn btn-block btn-lg btn-primary btn-rounded" type="submit">Subir
-                                Imágen
+                            <button class="btn btn-lg btn-warning btn-block" type="submit">
+                                Subir Imágen
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
-
-            <div class="line"></div>
-
         </div>
     </div>
-</div>
-
-{{> scripts}}
+    {{> scripts}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript">

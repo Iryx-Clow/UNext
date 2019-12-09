@@ -1,50 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
-{{> head title='Público'}}
-
-<body>
-
-<table>
-    <tr>
-        <td valign="middle" class="ticket-actual">
-            <span id="lblTicket1" class="ticket-actual-numero">Espere...</span>
-            <br>
-            <span id="lblEscritorio1" class="ticket-actual-escritorio"></span>
-        </td>
-        <td>
-            <table>
-                <tr>
-                    <td>
-                        <span id="lblTicket2" class="ticket-secundario"></span>
-                        <br>
-                        <span id="lblEscritorio2"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span id="lblTicket3" class="ticket-secundario"></span>
-                        <br>
-                        <span id="lblEscritorio3"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span id="lblTicket4" class="ticket-secundario"></span>
-                        <br>
-                        <span id="lblEscritorio4"></span>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-
-{{> scripts}}
-
-<script src="socket.io/socket.io.js"></script>
-<script src="./js/socket.publico.js"></script>
-
-</body>
-
+    {{> head title='Público'}}
+    <body class="bg-main-color">
+        <div class="wrapper h-100">
+            <div id="content" class="d-flex align-items-center pb-5 pt-5 h-100 text-center">
+                <div class="responsive-card">
+                    <div class="card pr-3 pl-3 pb-3 pt-3">
+                        <h1 class="h3 mb-3 font-weight-normal text-center w-100">
+                            Tickets por atender
+                        </h1>
+                        <p class="w-100 text-center" id="mensajeSinTickets">Por lo pronto no se han solicitado tickets para ser atendidos, favor de esperar.</p>
+                        <table class="table d-none" id="tablaTickets">
+                            <thead>
+                                <tr>
+                                    <th scope="col"># de ticket</th>
+                                    <th scope="col">Escritorio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="ticket-actual bg-warning">
+                                    <th scope="row"><span id="lblTicket1" class="ticket-actual-numero"></span></th>
+                                    <td><span id="lblEscritorio1" class="ticket-actual-escritorio"></span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><span id="lblTicket2" class="ticket-secundario"></span></th>
+                                    <td><span id="lblEscritorio2"></span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><span id="lblTicket3" class="ticket-secundario"></span></th>
+                                    <td><span id="lblEscritorio3"></span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><span id="lblTicket4" class="ticket-secundario"></span></th>
+                                    <td><span id="lblEscritorio4"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> scripts}}
+        <script src="socket.io/socket.io.js"></script>
+        <script src="./js/socket.publico.js"></script>
+    </body>
 </html>

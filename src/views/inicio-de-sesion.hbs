@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html>
-
-{{> head title='Iniciar Sesión'}}
-
-<body>
-
-<div class="mt-5 wrapper">
-    <div id="content">
-        <form class="container-fluid" action="/inicio-de-sesion" method="post">
-            <div class="input-group">
-                <div class="row">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Usuario</span>
+    {{> head title='Iniciar Sesión'}}
+    <body class="bg-main-color">
+        <div class="wrapper h-100">
+            <div id="content" class="d-flex align-items-center pb-5 pt-5 h-100 text-center">
+                <div class="responsive-card">
+                    <div class="card p-3">
+                        <div class="card-body d-md-flex justify-content-between d-block">
+                            <div class="pr-5 pr-md-4 pl-5 pl-md-2 col-md-4 col-12 d-flex align-items-center responsive-split-border">
+                                <img src="{{ img }}" alt="" class="w-100 mb-3 mb-md-0">
+                            </div>
+                            <div class="pl-md-4 col-md-8 col-12 mt-3 mt-md-0 d-flex align-items-center">
+                                <form action="/inicio-de-sesion" method="post" class="w-100">
+                                    <h1 class="h3 mb-3 font-weight-normal">Iniciar Sesión</h1>
+                                    <div class="form-group">
+                                        <input type="text" name="nombreUsuario" placeholder="Usuario" class="form-control" required autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="contrasena" placeholder="Contraseña" class="form-control" required>
+                                    </div>
+                                    <button class="btn btn-lg btn-warning btn-block" type="submit">Iniciar Sesión</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <input type="text" name="nombreUsuario" placeholder="Usuario" required autofocus>
-                </div>
-                <div class="row">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Contraseña</span>
-                    </div>
-                    <input type="password" name="contrasena" placeholder="Contraseña" required>
-                </div>
-                <div class="row">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
+                    <p class="mt-5 mb-3 text-white text-small">© 2020 <b class="text-warning">U NEXT</b> Todos los derechos reservados.</p>
                 </div>
             </div>
-        </form>
-    </div>
-</div>
-
-{{> scripts}}
-
-</body>
-
+        </div>
+        {{> scripts}}
+    </body>
 </html>
