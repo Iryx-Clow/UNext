@@ -7,7 +7,7 @@
             <div id="content" class="d-flex align-items-center justify-content-center pb-5 pt-5 h-100">
                 <div class="w-100">
                     <div class="responsive-card">
-                        <a class="text-decoration-none text-main-color" data-toggle="modal" data-target="#agregarEscritorio">Agregar escritorio</a>
+                        <a class="text-decoration-none text-main-color" data-toggle="modal" data-target="#agregarEscritorio">Agregar escritorio <i class="fas fa-plus"></i></a>
                         <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
                             <h1 class="h3 mb-3 font-weight-normal text-center w-100">
                                 Escritorios
@@ -26,8 +26,8 @@
                                         <th scope="row">{{escritorio.nombre}}</th>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <button onclick="ingresarEscritorio({{escritorio.nombre}})" type="button" class="btn btn-warning" data-toggle="modal" data-target="#ingresarEscritorio">Ingresar</button>
-                                                <button onclick="eliminarEscritorio({{escritorio.nombre}})" type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarEscritorio">Eliminar</button>
+                                                <button onclick="ingresarEscritorio({{escritorio.nombre}})" type="button" class="btn btn-warning" data-toggle="modal" data-target="#ingresarEscritorio">Ingresar <i class="fas fa-door-open"></i></button>
+                                                <button onclick="eliminarEscritorio({{escritorio.nombre}})" type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarEscritorio">Eliminar <i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </td>
                                     </tr>
