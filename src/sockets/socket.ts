@@ -29,7 +29,11 @@ export const siguienteTicket = (cliente: Socket, io: Server) => {
     cliente.on('siguienteTicket', async () => {
         let empresa = cliente.handshake.session!.empresa;
         if (empresa) {
-            let siguiente: string = await ticketControlList.getTicketsEmpresa(empresa).getSiguiente();
+            let ticketControl = ticketControlList.getTicketsEmpresa(empresa);
+            let siguiente: number = await ticketControl.getSiguiente();
+            let promedio: number = ticketControl.getTicketsFaltantes(siguiente) * ticketControl.promedioTiempo;
+            console.log('promedio: ', promedio);
+            console.log('tiempo unitario: ', ticketControl.promedioTiempo);
             io.to(empresa).emit('siguienteTicket', siguiente);
         }
     });

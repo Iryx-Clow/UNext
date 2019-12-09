@@ -4,8 +4,9 @@ const autopopulate = require('mongoose-autopopulate');
 export interface ITurno extends Document {
     idCuenta: string,
     idEscritorio: string | null,
-    clave: string,
-    fechaRegistro: Date
+    clave: number,
+    fechaRegistro: Date,
+    tiempo: number | null
 }
 
 const turnoSchema = new Schema({
@@ -19,13 +20,14 @@ const turnoSchema = new Schema({
         ref: 'Escritorio'
     },
     clave: {
-        type: String,
-        required: [true, 'La secuencia es obligatoria']
+        type: Number,
+        required: [true, 'La clave es obligatoria']
     },
     fechaRegistro: {
         type: Date,
         required: [true, 'La fecha de registro es obligatoria']
-    }
+    },
+    tiempo: Number
 }, {
     versionKey: false
 });

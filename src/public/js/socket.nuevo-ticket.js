@@ -18,7 +18,11 @@ socket.on('estadoActual', function (resp) {
 });
 
 socket.on('siguienteTicket', function (siguienteTicket) {
-    label.text(siguienteTicket);
+    if (siguienteTicket === -1) {
+        label.text('Error al generar ticket, contacte al equipo de soport');
+    } else {
+        label.text('Ticket ' + siguienteTicket);
+    }
 });
 
 $('button').on('click', function () {
