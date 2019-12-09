@@ -10,7 +10,7 @@ export interface IEscritorio extends Document {
 
 const escritorioSchema: Schema = new Schema({
     idCuenta: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Cuenta',
         required: [true, 'El ID de la cuenta es obligatorio']
     },

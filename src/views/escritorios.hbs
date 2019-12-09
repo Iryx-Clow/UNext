@@ -26,8 +26,8 @@
                                         <th scope="row">{{escritorio.nombre}}</th>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <button onclick="ingresarEscritorio({{escritorio.nombre}})" type="button" class="btn btn-warning" data-toggle="modal" data-target="#ingresarEscritorio">Ingresar <i class="fas fa-door-open"></i></button>
-                                                <button onclick="eliminarEscritorio({{escritorio.nombre}})" type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarEscritorio">Eliminar <i class="fas fa-trash-alt"></i></button>
+                                                <button onclick="ingresarEscritorio({{escritorio._id}})" type="button" class="btn btn-warning" data-toggle="modal" data-target="#ingresarEscritorio">Ingresar <i class="fas fa-door-open"></i></button>
+                                                <button onclick="eliminarEscritorio({{escritorio._id}})" type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarEscritorio">Eliminar <i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -41,13 +41,14 @@
         </div>
         {{> scripts}}
         <script type="text/javascript">
-            function eliminarEscritorio(numeroEscritorio) {
-                document.getElementById('numeroDeEscritorioAEliminar').innerHTML = numeroEscritorio;
+
+            function eliminarEscritorio(_idEscritorio) {
+                document.getElementById('numeroDeEscritorioAEliminar').innerText = _idEscritorio;
             }
 
-            function ingresarEscritorio(numeroEscritorio) {
-                document.getElementById("linkParaIngresarAEscritorio").href="/escritorio?escritorio=" + numeroEscritorio;
-                document.getElementById('numeroDeEscritorioAIngresar').innerHTML = numeroEscritorio;
+            function ingresarEscritorio(_idEscritorio) {
+                document.getElementById("linkParaIngresarAEscritorio").href="/escritorio?escritorio=" + _idEscritorio;
+                document.getElementById('numeroDeEscritorioAIngresar').innerHTML = _idEscritorio;
             }
         </script>
     </body>

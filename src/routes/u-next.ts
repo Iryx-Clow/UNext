@@ -3,6 +3,7 @@ import { base64 } from '../tools/tools';
 import path from 'path';
 import handlebars from 'hbs';
 import Cuenta from '../models/cuenta';
+import Escritorio from '../models/escritorio';
 import { ICuenta } from "../models/cuenta";
 import { validarSesion } from '../middlewares/middlewares';
 
@@ -24,9 +25,10 @@ app.get('/configuracion', [validarSesion], async (req: Request, res: Response) =
     res.render('configuracion', {imgConfiguracion, img, active: {Configuracion: true }});
 });
 
-app.get('/escritorios', [validarSesion], (req: Request, res: Response) => {
+app.get('/escritorios', [validarSesion], async (req: Request, res: Response) => {
+    const escritorios = await Escritorio.find({ idCuenta: req.session!.empresa, activo: true });
     const img = base64('favicon2.png');
-    res.render('escritorios', {img, active: {Escritorios: true }, escritorios: [{nombre: 1},{nombre: 2},{nombre: 3},{nombre: 4},{nombre: 5}]});
+    res.render('escritorios', {img, active: {Escritorios: true }, escritorios});
 });
 
 
