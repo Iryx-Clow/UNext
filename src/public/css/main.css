@@ -23,12 +23,28 @@ body.padding-top-fix {
     font-size: 0.75rem;;
 }
 
+.responsive-card {
+    width: 100%;
+    max-width: 660px;
+    margin: auto;
+}
+
 .responsive-split-border {
     border-bottom: 0 !important;
     border-right: 1px solid #dee2e6 !important;
 }
 
+@media (max-width: 575.98px) {
+    .responsive-card {
+        max-width: 280px;
+    }
+}
+
 @media (max-width: 767.98px) {
+    .responsive-card {
+        max-width: 330px;
+    }
+
     .responsive-split-border {
         border-right: 0 !important;
         border-bottom: 1px solid #dee2e6 !important;

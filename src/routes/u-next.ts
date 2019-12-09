@@ -66,4 +66,9 @@ app.get('/publico', (req: Request, res: Response) => {
     res.render('publico');
 });
 
+app.get('/detalles-ticket', (req: Request, res: Response) => {
+    const img = base64('favicon2.png');
+    res.render('detalles-ticket', {img});
+});
+
 export = app;
