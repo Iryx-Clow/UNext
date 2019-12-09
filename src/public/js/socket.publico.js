@@ -1,6 +1,8 @@
 // Comando para establecer la conexión
 var socket = io();
 
+var tablaTickets = $('#tablaTickets');
+var mensajeSinTickets = $('#mensajeSinTickets');
 var lblTicket1 = $('#lblTicket1');
 var lblTicket2 = $('#lblTicket2');
 var lblTicket3 = $('#lblTicket3');
@@ -31,11 +33,14 @@ socket.on('ultimos4', function (data) {
 
 
 function actualizaHTML(ultimos4) {
-
+    if(ultimos4.length > 0 && tablaTickets.hasClass('d-none')) {
+        tablaTickets.removeClass('d-none');
+        mensajeSinTickets.addClass('d-none');
+    }
     for (var i = 0; i <= ultimos4.length - 1; i++) {
 
-        lblTickets[i].text('Ticket ' + ultimos4[i].numero);
-        lblEscritorios[i].text('Escritorio ' + ultimos4[i].escritorio);
+        lblTickets[i].text('' + ultimos4[i].numero);
+        lblEscritorios[i].text('' + ultimos4[i].escritorio);
     }
 
 }
