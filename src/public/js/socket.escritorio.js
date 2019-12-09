@@ -6,7 +6,7 @@ if (!params.has('escritorio')) {
     throw new Error('La empresa/escritorio es necesario');
 }
 
-var escritorio = searchParams.get('escritorio');
+var escritorio = params.get('escritorio');
 var ticketEnAtencion = $('#ticketEnAtencion');
 var numeroDeTicketEnAtencion = $('#numeroDeTicketEnAtencion');
 
