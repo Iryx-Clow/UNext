@@ -1,12 +1,12 @@
-import bodyParser from 'body-parser';
 import expressSession from 'express-session';
 import express from 'express';
 import socketIO from 'socket.io';
-import mongoose, { Connection } from 'mongoose';
+import mongoose from 'mongoose';
 import http from 'http';
 import path from 'path';
 import * as socket from '../sockets/socket';
 import { MongoError } from 'mongodb';
+import sharedSession from 'express-socket.io-session';
 
 export default class Server {
 
@@ -19,19 +19,21 @@ export default class Server {
     private constructor() {
         this.app = express();
         this.app.set('view engine', 'hbs');
-        this.app.use(bodyParser.urlencoded({extended: true}));
-        this.app.use(bodyParser.json());
-        this.app.use(expressSession({
+        this.app.use(express.urlencoded({extended: true}));
+        this.app.use(express.json());
+        let session = expressSession({
             name: 'u-next',
-            resave: false,
+            resave: true,
             saveUninitialized: true,
             secret: 'ce_SEVt5d9#eWs5B2QkD8PweX'
-        }));
+        });
+        this.app.use(session);
         this.app.use(require('../routes/index'));
         this.app.use(express.static(path.resolve(__dirname, '../public')));
         this.port = 3000;
         this.httpServer = http.createServer(this.app);
         this.io = socketIO(this.httpServer);
+        this.io.use(sharedSession(session));
         this.escucharSockets();
         this.iniciarConexionBD();
     }
@@ -42,16 +44,10 @@ export default class Server {
 
     private escucharSockets(): void {
         this.io.on('connection', cliente => {
-            // Siguiente Ticket
-            socket.siguienteTicket(cliente);
-
-            // Estado Actual
-            socket.estadoActual(cliente);
-
-            // Atender Ticket
+            socket.entrarEmpresa(cliente, this.io);
+            socket.siguienteTicket(cliente, this.io);
             socket.atenderTicket(cliente);
         });
-
     }
 
     public start(callback: VoidFunction): void {
