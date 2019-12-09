@@ -1,8 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
-import { UploadedFile } from 'express-fileupload';
 
 export const verificarImagen = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.files) {
+    if (!req.session!.empresa) {
+        return res.status(403).json({
+            ok: false,
+            err: {
+                message: 'Debe iniciar sesión para realizar esta acción'
+            }
+        })
+    }
+    if (!req.files || !req.files.imagen || Array.isArray(req.files.imagen)) {
         return res.status(400).json({
             ok: false,
             err: {
@@ -10,11 +17,11 @@ export const verificarImagen = (req: Request, res: Response, next: NextFunction)
             }
         });
     }
-    const imagen: UploadedFile = req.files.imagen as UploadedFile;
-    const formatosValidos: Array<string> = ['png', 'gif', 'jpg', 'jpeg'];
-    let nombreImagen: string = imagen.name;
-    let nombreSplit: string[] = nombreImagen.split('.');
-    const formatoImagen: string = nombreSplit[nombreSplit.length - 1];
+    const imagen = req.files.imagen;
+    const formatosValidos = ['png', 'gif', 'jpg', 'jpeg'];
+    let nombreImagen = imagen.name;
+    let nombreSplit = nombreImagen.split('.');
+    const formatoImagen = nombreSplit[nombreSplit.length - 1];
     if (formatosValidos.indexOf(formatoImagen) < 0) {
         return res.status(400).json({
             ok: false,

@@ -1,9 +1,9 @@
-import express, {Request, Response} from 'express';
-import {base64} from '../tools/tools';
+import express, { Request, Response } from 'express';
+import { base64 } from '../tools/tools';
 import path from 'path';
 import handlebars from 'hbs';
 import Cuenta from '../models/cuenta';
-import {ICuenta} from "../models/cuenta";
+import { ICuenta } from "../models/cuenta";
 import { validarSesion } from '../middlewares/middlewares';
 
 const app = express();
@@ -17,9 +17,10 @@ app.get('/', [validarSesion], (req: Request, res: Response) => {
     res.redirect('/index');
 });
 
-app.get('/configuracion', [validarSesion], (req: Request, res: Response) => {
-    const img = base64('temporal.png');
-    res.render('configuracion', {img});
+app.get('/configuracion', [validarSesion], async (req: Request, res: Response) => {
+    const empresa = await Cuenta.findOne({ _id: req.session!.empresa });
+    const img = base64(empresa!.imagenEmpresa);
+    res.render('configuracion', { img });
 });
 
 app.get('/escritorio', [validarSesion], (req: Request, res: Response) => {
@@ -35,7 +36,7 @@ app.get('/inicio-de-sesion', (req: Request, res: Response) => {
 });
 
 app.post('/inicio-de-sesion', (req: Request, res: Response) => {
-    const condiciones = {nombreUsuario: req.body.nombreUsuario};
+    const condiciones = { nombreUsuario: req.body.nombreUsuario };
     Cuenta.findOne(condiciones, (err: any, cuenta: ICuenta) => {
         if (err) {
             return res.status(500);
@@ -49,7 +50,7 @@ app.post('/inicio-de-sesion', (req: Request, res: Response) => {
             res.redirect('/index');
             res.end();
         } else {
-            res.writeHead(403, {Location: 'index'});
+            res.writeHead(403, { Location: 'index' });
             res.end();
         }
     });

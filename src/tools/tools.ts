@@ -14,7 +14,7 @@ export const base64 = (nombreImagen: string) => {
     let imagenBase64: string;
     let pathImagen: string = getPathImagen(nombreImagen);
     if (!fs.existsSync(pathImagen)) {
-        nombreImagen = "temporal.png";
+        nombreImagen = "default.png";
         pathImagen = getPathImagen(nombreImagen);
     }
     formatoArray = nombreImagen.split('.');
