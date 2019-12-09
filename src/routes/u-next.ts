@@ -25,13 +25,13 @@ app.get('/configuracion', (req: Request, res: Response) => {
 
 app.get('/escritorios', (req: Request, res: Response) => {
     const img = base64('favicon2.png');
-    res.render('escritorios', {img, active: {Escritorios: true }});
+    res.render('escritorios', {img, active: {Escritorios: true }, escritorios: [{nombre: 1},{nombre: 2},{nombre: 3},{nombre: 4},{nombre: 5}]});
 });
 
 
 app.get('/escritorio', (req: Request, res: Response) => {
     const img = base64('favicon2.png');
-    res.render('escritorio', {img, active: {Inicio: true }});
+    res.render('escritorio', {img});
 });
 
 app.get('/index', (req: Request, res: Response) => {

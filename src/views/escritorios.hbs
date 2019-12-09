@@ -3,22 +3,91 @@
     {{> head title='Escritorios'}}
     <body class="bg-secondary-color padding-top-fix">
         {{> navbar}}
-        <form action="escritorio" method="GET">
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Selecciona un escritorio</label>
-                <select name="escritorio" class="form-control" required>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+        <div class="wrapper h-100">
+            <div id="content" class="d-flex align-items-center justify-content-center pb-5 pt-5 h-100">
+                <div class="w-100">
+                    <div class="responsive-card">
+                        <a class="text-decoration-none text-main-color" data-toggle="modal" data-target="#agregarEscritorio">Agregar escritorio</a>
+                        <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
+                            <h1 class="h3 mb-3 font-weight-normal text-center w-100">
+                                Escritorios
+                            </h1>
+                            <!--<p class="w-100 text-center" id="mensajeSinTickets">Por lo pronto no se han solicitado tickets para ser atendidos, favor de esperar.</p>-->
+                            <table class="table" id="tablaEscritorios">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Escritorio</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each escritorios as |escritorio|}}
+                                    <tr class="ticket-actual">
+                                        <th scope="row">{{escritorio.nombre}}</th>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="/escritorio?escritorio={{escritorio.nombre}}" class=""><button type="button" class="btn btn-warning">Ingresar</button></a>
+                                                <button onclick="eliminarEscritorio({{escritorio.nombre}})" type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarEscritorio">Eliminar</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <br>
-            <button type="submit" class="btn btn-primary">
-                Ingresar
-            </button>
-        </form>
-    {{> scripts}}
+        </div>
+        {{> scripts}}
+        <script type="text/javascript">
+            function eliminarEscritorio(numeroEscritorio) {
+                document.getElementById('numeroDeEscritorioAEliminar').innerHTML = numeroEscritorio;
+            }
+        </script>
     </body>
 </html>
+
+<!-- Modal para agregar un escritorio -->
+<div class="modal fade" id="agregarEscritorio" tabindex="-1" role="dialog" aria-labelledby="agregarEscritorio" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Agregar escritorio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="nombreNuevoEscritorio" placeholder="Introduce el nombre o clave del nuevo escritorio">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn bg-main-color text-white">Agregar escritorio</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para eliminar un escritorio -->
+<div class="modal fade" id="eliminarEscritorio" tabindex="-1" role="dialog" aria-labelledby="eliminarEscritorio" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Eliminar escritorio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="w-100 text-center">¿Seguro que deseas eliminar el escritorio <b id="numeroDeEscritorioAEliminar"></b>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger">Eliminar escritorio</button>
+            </div>
+        </div>
+    </div>
+</div>

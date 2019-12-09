@@ -12,11 +12,15 @@ body.padding-top-fix {
 }
 
 .bg-main-color {
-    background:#2E53A3;
+    background: #2E53A3;
+}
+
+.text-main-color {
+    color: #2E53A3 !important;
 }
 
 .bg-secondary-color {
-    background: #fafafa;
+    background: #f0f0f0;
 }
 
 .text-small {
