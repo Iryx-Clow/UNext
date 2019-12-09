@@ -7,6 +7,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav ml-auto mt-2 mt-md-0">
+            <li class="nav-item {{#if active.Inicio}}active{{/if}}">
+                <a class="nav-link" href="/index">Inicio</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="/publico">Pantalla pública</a>
             </li>
@@ -14,9 +17,9 @@
                 <a class="nav-link" href="/nuevo-ticket">Pantalla de tickets</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/escritorio">Escritorios</a>
+                <a class="nav-link {{#if active.Escritorios}}active{{/if}}" href="/escritorios">Escritorios</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{#if active.Configuracion}}active{{/if}}">
                 <a class="nav-link" href="/configuracion">Configuración</a>
             </li>
         </ul>

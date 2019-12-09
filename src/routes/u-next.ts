@@ -18,17 +18,25 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/configuracion', (req: Request, res: Response) => {
-    const img = base64('temporal.png');
-    res.render('configuracion', {img});
+    const imgConfiguracion = base64('temporal.png');
+    const img = base64('favicon2.png');
+    res.render('configuracion', {imgConfiguracion, img, active: {Configuracion: true }});
 });
 
+app.get('/escritorios', (req: Request, res: Response) => {
+    const img = base64('favicon2.png');
+    res.render('escritorios', {img, active: {Escritorios: true }});
+});
+
+
 app.get('/escritorio', (req: Request, res: Response) => {
-    res.render('escritorio');
+    const img = base64('favicon2.png');
+    res.render('escritorio', {img, active: {Inicio: true }});
 });
 
 app.get('/index', (req: Request, res: Response) => {
     const img = base64('favicon2.png');
-    res.render('index', {img});
+    res.render('index', {img, active: {Inicio: true }});
 });
 
 app.get('/inicio-de-sesion', (req: Request, res: Response) => {

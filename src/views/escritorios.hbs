@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    {{> head title='Escritorios'}}
+    <body class="bg-secondary-color padding-top-fix">
+        {{> navbar}}
+        <form action="escritorio" method="GET">
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Selecciona un escritorio</label>
+                <select name="escritorio" class="form-control" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">
+                Ingresar
+            </button>
+        </form>
+    {{> scripts}}
+    </body>
+</html>
