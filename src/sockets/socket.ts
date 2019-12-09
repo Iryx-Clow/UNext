@@ -4,7 +4,7 @@ import TicketControlList, { Ticket } from '../classes/ticket-control';
 export const ticketControlList: TicketControlList = new TicketControlList();
 
 export const entrarEmpresa = (cliente: Socket, io: Server) => {
-    cliente.on('entrarEmpresa', (callback: Function) => {
+    cliente.on('entrarEmpresa', async (callback: Function) => {
         let empresa: string = cliente.handshake.session!.empresa;
         if (!empresa) {
             return callback({
@@ -15,6 +15,7 @@ export const entrarEmpresa = (cliente: Socket, io: Server) => {
         cliente.join(empresa);
         ticketControlList.nuevaEmpresa(empresa);
         let ticketControl = ticketControlList.getTicketsEmpresa(empresa);
+        await ticketControl.inicializar();
         let dataActual = {
             actual: ticketControl.ultimoTicket,
             ultimos4: ticketControl.ultimos4
