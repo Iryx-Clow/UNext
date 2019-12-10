@@ -10,7 +10,7 @@ var escritorio = params.get('escritorio');
 var ticketEnAtencion = $('#ticketEnAtencion');
 var numeroDeTicketEnAtencion = $('#numeroDeTicketEnAtencion');
 
-$('#numeroEscritorio').text('Escritorio ' + escritorio);
+// $('#numeroEscritorio').text('Escritorio ' + escritorio);
 
 socket.on('connect', function () {
     socket.emit('entrarEmpresa', function (resp) {

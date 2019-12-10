@@ -32,9 +32,25 @@ app.get('/escritorios', [validarSesion], async (req: Request, res: Response) => 
 });
 
 
-app.get('/escritorio', [validarSesion], (req: Request, res: Response) => {
-    const img = base64('favicon2.png');
-    res.render('escritorio', {img});
+app.get('/escritorio', [validarSesion], async (req: Request, res: Response) => {
+    const idEscritorio = req.query.escritorio;
+    if (!idEscritorio) {
+        res.redirect('/escritorios');
+    } else {
+        const escritorio = await Escritorio.findOne({ _id: idEscritorio, activo: true });
+        if (!escritorio) {
+            return res.status(404).json({
+                ok: false,
+                err: {
+                    message: 'El escritorio solicitado no se encontró'
+                }
+            })
+        }
+        const empresa = await Cuenta.findOne({ _id: escritorio.idCuenta });
+        const img = base64(empresa!.imagenEmpresa);
+        const nombreEscritorio = escritorio.nombre;
+        res.render('escritorio', {img, nombreEscritorio});
+    }
 });
 
 app.get('/index', [validarSesion], (req: Request, res: Response) => {
