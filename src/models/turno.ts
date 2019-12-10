@@ -11,7 +11,7 @@ export interface ITurno extends Document {
 
 const turnoSchema = new Schema({
     idCuenta: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Cuenta',
         required: [true, 'El ID de la cuenta es obligatorio']
     },

@@ -1,9 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
     {{> head title='Inicio'}}
+    <script>
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light2",
+                title:{
+                    text: ""
+                },
+                axisY:{
+                    includeZero: true
+                },
+                data: [{
+                    type: "line",
+                    dataPoints: [
+                        {{#each reporteHorasPico as |hora|}}
+                            {y: {{hora.y}} },
+                        {{/each}}
+                    ]
+                }]
+            });
+            chart.render();
+        }
+    </script><!--Tickes por hora-->
     <body class="bg-secondary-color padding-top-fix">
         {{> navbar}}
-
+        <div class="w-100 d-block d-md-flex justify-content-center">
+            <div class="responsive-sm-card mt-2 mt-md-0">
+                <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
+                    <i class="fas fa-times text-danger" style="font-size: 4rem"></i>
+                    <hr>
+                    <h1 class="h3 mb-3 font-weight-normal text-center w-100">
+                        Tiempo mínimo de espera
+                    </h1>
+                    <p>{{reporteTiemposDeEspera.tiempoMinimo}}</p>
+                </div>
+            </div>
+            <div class="responsive-sm-card mt-2 mt-md-0">
+                <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
+                    <i class="fas fa-hourglass-half" style="font-size: 4rem"></i>
+                    <hr>
+                    <h1 class="h3 mb-3 font-weight-normal text-center w-100">
+                        Tiempo promedio de espera
+                    </h1>
+                    <p>{{reporteTiemposDeEspera.tiempoPromedio}}</p>
+                </div>
+            </div>
+            <div class="responsive-sm-card mt-2 mt-md-0">
+                <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
+                    <i class="fas fa-check text-success" style="font-size: 4rem"></i>
+                    <hr>
+                    <h1 class="h3 mb-3 font-weight-normal text-center w-100">
+                        Tiempo máximo de espera
+                    </h1>
+                    <p>{{reporteTiemposDeEspera.tiempoMaximo}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="responsive-lg-card mt-2 mt-md-4">
+            <div class="card rounded overflow-hidden">
+                <h1 class="h3 mb-3 font-weight-normal text-center w-100">
+                    Tickes por hora
+                </h1>
+                <div id="chartContainer" style="height: 400px; width: 100%;"></div>
+            </div>
+        </div>
         {{> scripts}}
+        <script src="js/canvasjs.min.js"></script>
     </body>
 </html>

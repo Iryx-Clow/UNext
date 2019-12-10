@@ -17,8 +17,76 @@ handlebars.registerPartials(path.resolve(__dirname, '../views/partials'));
 
 app.get('/', [validarSesion], async (req: Request, res: Response) => {
     const empresa = await Cuenta.findOne({ _id: req.session!.empresa });
+    const reporteTiemposDeEspera = await Turno.aggregate(
+        [
+            {
+                $match: {
+                    idCuenta: empresa!._id,
+                    tiempo: {$ne: null}
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        idCuenta: '$idCuenta',
+                    },
+                    cantidadTurnos: {$sum: 1},
+                    tiempoTotal: {$sum: '$tiempo'},
+                    tiempoMaximo: {$max: '$tiempo'},
+                    tiempoMinimo: {$min: '$tiempo'}
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    tiempoPromedio: { $divide: [ '$tiempoTotal', '$cantidadTurnos' ] },
+                    tiempoMaximo: 1,
+                    tiempoMinimo: 1
+                }
+            },
+        ]
+    );
+    const reporteHorasPico = await Turno.aggregate(
+        [
+            {
+                $match: {
+                    idCuenta: empresa!._id
+                }
+            },
+            {
+                $project: {
+                    hora: { $hour: "$fechaRegistro" },
+                }
+            },
+            {
+                $group: {
+                    _id: '$hora',
+                    cantidadTurnos: {$sum: 1}
+                },
+            },
+            {
+                $project: {
+                    _id: 1,
+                    cantidadTurnos: 1
+                }
+            },
+        ]
+    );
+    let reporteFinalHorasPico = [];
+    for(let i=0; i<24; i++) {
+        let posicion = reporteHorasPico.findIndex((hora) => {
+            return hora._id === i;
+        });
+        if (posicion !== -1) {
+            reporteFinalHorasPico.push({y: reporteHorasPico[posicion].cantidadTurnos})
+        } else {
+            reporteFinalHorasPico.push({y: 0});
+        }
+    }
+    console.log(reporteFinalHorasPico);
+    console.log(reporteTiemposDeEspera);
     const img = base64('favicon2.png');
-    res.render('index', {img, active: {Inicio: true }, color1: empresa!.color1, color2: empresa!.color2});
+    res.render('index', {img, active: {Inicio: true }, color1: empresa!.color1, color2: empresa!.color2, reporteHorasPico: reporteFinalHorasPico, reporteTiemposDeEspera: reporteTiemposDeEspera[0]});
 });
 
 app.get('/configuracion', [validarSesion], async (req: Request, res: Response) => {
@@ -59,8 +127,76 @@ app.get('/escritorio', [validarSesion], async (req: Request, res: Response) => {
 
 app.get('/index', [validarSesion], async (req: Request, res: Response) => {
     const empresa = await Cuenta.findOne({ _id: req.session!.empresa });
+    const reporteTiemposDeEspera = await Turno.aggregate(
+        [
+            {
+                $match: {
+                    idCuenta: empresa!._id,
+                    tiempo: {$ne: null}
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        idCuenta: '$idCuenta',
+                    },
+                    cantidadTurnos: {$sum: 1},
+                    tiempoTotal: {$sum: '$tiempo'},
+                    tiempoMaximo: {$max: '$tiempo'},
+                    tiempoMinimo: {$min: '$tiempo'}
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    tiempoPromedio: { $divide: [ '$tiempoTotal', '$cantidadTurnos' ] },
+                    tiempoMaximo: 1,
+                    tiempoMinimo: 1
+                }
+            },
+        ]
+    );
+    const reporteHorasPico = await Turno.aggregate(
+        [
+            {
+                $match: {
+                    idCuenta: empresa!._id
+                }
+            },
+            {
+                $project: {
+                    hora: { $hour: "$fechaRegistro" },
+                }
+            },
+            {
+                $group: {
+                    _id: '$hora',
+                    cantidadTurnos: {$sum: 1}
+                },
+            },
+            {
+                $project: {
+                    _id: 1,
+                    cantidadTurnos: 1
+                }
+            },
+        ]
+    );
+    let reporteFinalHorasPico = [];
+    for(let i=0; i<24; i++) {
+        let posicion = reporteHorasPico.findIndex((hora) => {
+            return hora._id === i;
+        });
+        if (posicion !== -1) {
+            reporteFinalHorasPico.push({y: reporteHorasPico[posicion].cantidadTurnos})
+        } else {
+            reporteFinalHorasPico.push({y: 0});
+        }
+    }
+    console.log(reporteFinalHorasPico);
+    console.log(reporteTiemposDeEspera);
     const img = base64('favicon2.png');
-    res.render('index', {img, active: {Inicio: true }, color1: empresa!.color1, color2: empresa!.color2});
+    res.render('index', {img, active: {Inicio: true }, color1: empresa!.color1, color2: empresa!.color2, reporteHorasPico: reporteFinalHorasPico, reporteTiemposDeEspera: reporteTiemposDeEspera[0]});
 });
 
 app.get('/inicio-de-sesion', (req: Request, res: Response) => {

@@ -33,6 +33,12 @@ body.padding-top-fix {
     margin: auto;
 }
 
+.responsive-lg-card {
+    width: 100%;
+    max-width: 990px;
+    margin: auto;
+}
+
 .responsive-card {
     width: 100%;
     max-width: 660px;
