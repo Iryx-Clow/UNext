@@ -7,7 +7,7 @@
             <div id="content" class="d-flex align-items-center justify-content-center pb-5 pt-5 h-100">
                 <div class="w-100">
                     <div class="responsive-card">
-                        <a class="text-decoration-none text-main-color" data-toggle="modal" data-target="#agregarEscritorio">Agregar escritorio <i class="fas fa-plus"></i></a>
+                        <a class="text-decoration-none text-color-1" data-toggle="modal" data-target="#agregarEscritorio">Agregar escritorio <i class="fas fa-plus"></i></a>
                         <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
                             <h1 class="h3 mb-3 font-weight-normal text-center w-100">
                                 Escritorios
@@ -26,7 +26,7 @@
                                         <th scope="row">{{escritorio.nombre}}</th>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <button onclick="ingresarEscritorio('{{escritorio._id}}', '{{escritorio.nombre}}')" type="button" class="btn btn-warning" data-toggle="modal" data-target="#ingresarEscritorio">Ingresar <i class="fas fa-door-open"></i></button>
+                                                <a href="/escritorio?escritorio={{escritorio._id}}"><button type="button" class="btn bg-color-2" data-toggle="modal" data-target="#ingresarEscritorio">Ingresar <i class="fas fa-door-open"></i></button></a>
                                                 <button onclick="eliminarEscritorio('{{escritorio._id}}', '{{escritorio.nombre}}')" type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarEscritorio">Eliminar <i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </td>
@@ -39,90 +39,70 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
+        <!-- Modal para agregar un escritorio -->
+        <div class="modal fade" id="agregarEscritorio" tabindex="-1" role="dialog" aria-labelledby="agregarEscritorio" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Agregar escritorio</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="nombreNuevoEscritorio" placeholder="Introduce el nombre o clave del nuevo escritorio">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn bg-color-1 text-white">Agregar escritorio</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Modal para eliminar un escritorio -->
+        <div class="modal fade" id="eliminarEscritorio" tabindex="-1" role="dialog" aria-labelledby="eliminarEscritorio" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Eliminar escritorio</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="w-100 text-center">¿Seguro que deseas eliminar el escritorio <b id="numeroDeEscritorioAEliminar"></b>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger">Eliminar escritorio</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
             function eliminarEscritorio(_idEscritorio, nombre) {
                 document.getElementById('numeroDeEscritorioAEliminar').innerText = _idEscritorio;
             }
 
-            function ingresarEscritorio(_idEscritorio, nombre) {
-                document.getElementById("linkParaIngresarAEscritorio").href="/escritorio?escritorio=" + _idEscritorio;
-                document.getElementById('numeroDeEscritorioAIngresar').innerHTML = nombre;
+            var i;
+            var color1 = document.getElementsByClassName('bg-color-1');
+            for (i = 0; i < color1.length; i++) {
+                color1[i].style.backgroundColor = '{{color1}}';
+            }
+            var color2 = document.getElementsByClassName('bg-color-2');
+            var j;
+            for (j = 0; j < color2.length; j++) {
+                color2[j].style.backgroundColor = '{{color2}}';
+            }
+            var k;
+            var colorTexto1 = document.getElementsByClassName('text-color-1');
+            for (k = 0; k < colorTexto1.length; k++) {
+                colorTexto1[k].style.color = '{{color1}}';
             }
         </script>
         {{> scripts}}
     </body>
 </html>
-
-<!-- Modal para agregar un escritorio -->
-<div class="modal fade" id="agregarEscritorio" tabindex="-1" role="dialog" aria-labelledby="agregarEscritorio" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Agregar escritorio</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="nombreNuevoEscritorio" placeholder="Introduce el nombre o clave del nuevo escritorio">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn bg-main-color text-white">Agregar escritorio</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal para eliminar un escritorio -->
-<div class="modal fade" id="eliminarEscritorio" tabindex="-1" role="dialog" aria-labelledby="eliminarEscritorio" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Eliminar escritorio</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="w-100 text-center">¿Seguro que deseas eliminar el escritorio <b id="numeroDeEscritorioAEliminar"></b>?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger">Eliminar escritorio</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal para ingresar a un escritorio -->
-<div class="modal fade" id="ingresarEscritorio" tabindex="-1" role="dialog" aria-labelledby="ingresarEscritorio" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Ingresar a un escritorio</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="w-100 text-center">Para ingrear al escritorio <b id="numeroDeEscritorioAIngresar"></b> debes de ingresar tu usuario y contraseña.</p>
-                <form action="" method="post" class="w-100">
-                    <div class="form-group">
-                        <input type="text" name="nombreUsuario" placeholder="Usuario" class="form-control" required autofocus>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="contrasena" placeholder="Contraseña" class="form-control" required>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <a id="linkParaIngresarAEscritorio"><button type="button" class="btn btn-warning">Ingresar al escritorio</button></a>
-            </div>
-        </div>
-    </div>
-</div>

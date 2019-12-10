@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     {{> head title='Detalles de ticket'}}
-    <body class="bg-main-color">
+    <body class="bg-color-1">
         <div class="wrapper h-100">
             <div id="content" class="d-flex align-items-center pb-5 pt-5 h-100 text-center">
                 <div class="responsive-card">
@@ -25,5 +25,17 @@
             </div>
         </div>
         {{> scripts}}
+        <script>
+            var i;
+            var color1 = document.getElementsByClassName('bg-color-1');
+            for (i = 0; i < color1.length; i++) {
+                color1[i].style.backgroundColor = '{{color1}}';
+            }
+            var color2 = document.getElementsByClassName('bg-color-2');
+            var j;
+            for (j = 0; j < color2.length; j++) {
+                color2[j].style.backgroundColor = '{{color2}}';
+            }
+        </script>
     </body>
 </html>

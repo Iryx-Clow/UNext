@@ -5,9 +5,9 @@
     {{> navbar}}
     <div id="top"></div>
     <div class="wrapper h-100">
-        <div id="content" class="d-flex align-items-center justify-content-center pb-5 pt-5 h-100">
-            <div class="w-100">
-                <div class="responsive-card">
+        <div id="content" class="d-flex justify-content-center">
+            <div>
+                <div class="responsive-sm-card">
                     <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
                         <h1 class="h3 mb-3 font-weight-normal text-center w-100">
                             Imágen actual
@@ -24,8 +24,29 @@
                                     <label class="custom-file-label" for="validatedCustomFile">Elegir archivo...</label>
                                 </div>
                             </div>
-                            <button class="btn btn-lg btn-warning btn-block" type="submit">
+                            <button class="btn btn-lg bg-color-2 btn-block" type="submit">
                                 Subir Imágen
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="responsive-sm-card mt-2">
+                    <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
+                        <h1 class="h3 mb-3 font-weight-normal text-center w-100">
+                            Configuración de colores
+                        </h1>
+                        <div id="imagePreview" class="pr-5 pl-5"></div>
+                        <form action="/colores" method="POST">
+                            <div class="form-group">
+                                <label for="color1">Color primario</label>
+                                <input type="color" class="form-control" id="color1" name="color1" value="{{color1}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="color2">Color secundario</label>
+                                <input type="color" class="form-control" id="color2" name="color2" value="{{color2}}">
+                            </div>
+                            <button class="btn btn-lg bg-color-2 btn-block" type="submit">
+                                Guardar colores
                             </button>
                         </form>
                     </div>
@@ -34,6 +55,18 @@
         </div>
     </div>
     {{> scripts}}
+    <script>
+        var i;
+        var color1 = document.getElementsByClassName('bg-color-1');
+        for (i = 0; i < color1.length; i++) {
+            color1[i].style.backgroundColor = '{{color1}}';
+        }
+        var color2 = document.getElementsByClassName('bg-color-2');
+        var j;
+        for (j = 0; j < color2.length; j++) {
+            color2[j].style.backgroundColor = '{{color2}}';
+        }
+    </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript">
