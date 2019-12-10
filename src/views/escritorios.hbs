@@ -3,7 +3,7 @@
     {{> head title='Escritorios'}}
     <body class="bg-secondary-color padding-top-fix">
         {{> navbar}}
-        <div class="wrapper h-100">
+        <div class="wrapper h-100 mt-3">
             <div id="content" class="d-flex align-items-center justify-content-center pb-5 pt-5 h-100">
                 <div class="w-100">
                     <div class="responsive-card">
@@ -42,7 +42,7 @@
         <script type="text/javascript">
 
             function eliminarEscritorio(_idEscritorio, nombre) {
-                document.getElementById('numeroDeEscritorioAEliminar').innerText = _idEscritorio;
+                document.getElementById('numeroDeEscritorioAEliminar').value = _idEscritorio;
             }
 
             function ingresarEscritorio(_idEscritorio, nombre) {
@@ -64,15 +64,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <form action="/escritorio" method="post" class="w-100">
             <div class="modal-body">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="nombreNuevoEscritorio" placeholder="Introduce el nombre o clave del nuevo escritorio">
+                 <div class="form-group">
+                    <input type="text" class="form-control" id="nombreNuevoEscritorio" name="nombreNuevoEscritorio" placeholder="Introduce el nombre o clave del nuevo escritorio" required autofocus>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn bg-main-color text-white">Agregar escritorio</button>
+                <button type="reset" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn bg-main-color text-white">Agregar escritorio</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -87,13 +89,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p class="w-100 text-center">¿Seguro que deseas eliminar el escritorio <b id="numeroDeEscritorioAEliminar"></b>?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger">Eliminar escritorio</button>
-            </div>
+            <form action="/eliminar-escritorio" method="post">
+                <div class="modal-body">
+                    <p class="w-100 text-center">¿Seguro que deseas eliminar el escritorio <b><input class="form-Control" type="text" id="numeroDeEscritorioAEliminar" name="numeroDeEscritorioAEliminar" hidden></b>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger" >Eliminar escritorio</button>
+                </div>
+            </form>
+                
         </div>
     </div>
 </div>
