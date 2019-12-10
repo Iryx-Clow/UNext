@@ -15,6 +15,7 @@ app.post('/escritorio', [validarSesion],async(req: Request, res: Response) =>{
     const datos = {
         nombre: req.body.nombreNuevoEscritorio
     }
+    console.log(datos);
     let empresa = await Cuenta.findOne({ _id: req.session!.empresa });
     if(datos.nombre){
     const escritorio = new Escritorio();

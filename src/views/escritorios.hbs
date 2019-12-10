@@ -49,19 +49,20 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="nombreNuevoEscritorio" placeholder="Introduce el nombre o clave del nuevo escritorio">
+                    <form action="/escritorio" method="post" class="w-100">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="nombreNuevoEscritorio" name="nombreNuevoEscritorio" placeholder="Introduce el nombre o clave del nuevo escritorio" required autofocus>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn bg-color-1 text-white">Agregar escritorio</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn bg-color-1 text-white">Agregar escritorio</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
         <!-- Modal para eliminar un escritorio -->
         <div class="modal fade" id="eliminarEscritorio" tabindex="-1" role="dialog" aria-labelledby="eliminarEscritorio" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -72,16 +73,20 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <p class="w-100 text-center">¿Seguro que deseas eliminar el escritorio <b id="numeroDeEscritorioAEliminar"></b>?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger">Eliminar escritorio</button>
-                    </div>
+                    <form action="/eliminar-escritorio" method="post">
+                        <div class="modal-body">
+                            <p class="w-100 text-center">¿Seguro que deseas eliminar el escritorio <b><input class="form-Control" type="text" id="numeroDeEscritorioAEliminar" name="numeroDeEscritorioAEliminar" hidden></b>?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger" >Eliminar escritorio</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
+
         <script type="text/javascript">
             function eliminarEscritorio(_idEscritorio, nombre) {
                 document.getElementById('numeroDeEscritorioAEliminar').value = _idEscritorio;
@@ -106,52 +111,3 @@
         {{> scripts}}
     </body>
 </html>
-
-<!-- Modal para agregar un escritorio -->
-<div class="modal fade" id="agregarEscritorio" tabindex="-1" role="dialog" aria-labelledby="agregarEscritorio" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Agregar escritorio</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="/escritorio" method="post" class="w-100">
-            <div class="modal-body">
-                 <div class="form-group">
-                    <input type="text" class="form-control" id="nombreNuevoEscritorio" name="nombreNuevoEscritorio" placeholder="Introduce el nombre o clave del nuevo escritorio" required autofocus>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="reset" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn bg-main-color text-white">Agregar escritorio</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal para eliminar un escritorio -->
-<div class="modal fade" id="eliminarEscritorio" tabindex="-1" role="dialog" aria-labelledby="eliminarEscritorio" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Eliminar escritorio</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="/eliminar-escritorio" method="post">
-                <div class="modal-body">
-                    <p class="w-100 text-center">¿Seguro que deseas eliminar el escritorio <b><input class="form-Control" type="text" id="numeroDeEscritorioAEliminar" name="numeroDeEscritorioAEliminar" hidden></b>?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger" >Eliminar escritorio</button>
-                </div>
-            </form>
-                
-        </div>
-    </div>
-</div>
