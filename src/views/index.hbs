@@ -29,12 +29,12 @@
         <div class="w-100 d-block d-md-flex justify-content-center">
             <div class="responsive-sm-card mt-2 mt-md-0">
                 <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
-                    <i class="fas fa-times text-danger" style="font-size: 4rem"></i>
+                    <i class="fas fa-check text-success" style="font-size: 4rem"></i>
                     <hr>
                     <h1 class="h3 mb-3 font-weight-normal text-center w-100">
                         Tiempo mínimo de espera
                     </h1>
-                    <p>{{reporteTiemposDeEspera.tiempoMinimo}}</p>
+                    <p>{{reporteTiemposDeEspera.tiempoMinimoMinutos}} minutos y {{reporteTiemposDeEspera.tiempoMinimoSegundos}} segundos</p>
                 </div>
             </div>
             <div class="responsive-sm-card mt-2 mt-md-0">
@@ -44,17 +44,17 @@
                     <h1 class="h3 mb-3 font-weight-normal text-center w-100">
                         Tiempo promedio de espera
                     </h1>
-                    <p>{{reporteTiemposDeEspera.tiempoPromedio}}</p>
+                    <p>{{reporteTiemposDeEspera.tiempoPromedioMinutos}} minutos y {{reporteTiemposDeEspera.tiempoPromedioSegundos}} segundos</p>
                 </div>
             </div>
             <div class="responsive-sm-card mt-2 mt-md-0">
                 <div class="card pr-3 pl-3 pb-3 pt-3 text-center mt-2">
-                    <i class="fas fa-check text-success" style="font-size: 4rem"></i>
+                    <i class="fas fa-times text-danger" style="font-size: 4rem"></i>
                     <hr>
                     <h1 class="h3 mb-3 font-weight-normal text-center w-100">
                         Tiempo máximo de espera
                     </h1>
-                    <p>{{reporteTiemposDeEspera.tiempoMaximo}}</p>
+                    <p>{{reporteTiemposDeEspera.tiempoMaximoMinutos}} minutos y {{reporteTiemposDeEspera.tiempoMaximoSegundos}} segundos</p>
                 </div>
             </div>
         </div>

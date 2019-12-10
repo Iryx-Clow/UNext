@@ -85,8 +85,15 @@ app.get('/', [validarSesion], async (req: Request, res: Response) => {
     }
     console.log(reporteFinalHorasPico);
     console.log(reporteTiemposDeEspera);
+    let segundoReporte = {
+        tiempoPromedio: reporteTiemposDeEspera[0].tiempoPromedio,
+        tiempoMaximoMinutos: (reporteTiemposDeEspera[0].tiempoMaximo / 60),
+        tiempoMaximoSegundos: (reporteTiemposDeEspera[0].tiempoMaximo % 60),
+        tiempoMinimoMinutos: (reporteTiemposDeEspera[0].tiempoMinimo / 60),
+        tiempoMinimoSegundos: (reporteTiemposDeEspera[0].tiempoMinimo / 60)
+    };
     const img = base64('favicon2.png');
-    res.render('index', {img, active: {Inicio: true }, color1: empresa!.color1, color2: empresa!.color2, reporteHorasPico: reporteFinalHorasPico, reporteTiemposDeEspera: reporteTiemposDeEspera[0]});
+    res.render('index', {img, active: {Inicio: true }, color1: empresa!.color1, color2: empresa!.color2, reporteHorasPico: reporteFinalHorasPico, reporteTiemposDeEspera: segundoReporte});
 });
 
 app.get('/configuracion', [validarSesion], async (req: Request, res: Response) => {
@@ -195,8 +202,16 @@ app.get('/index', [validarSesion], async (req: Request, res: Response) => {
     }
     console.log(reporteFinalHorasPico);
     console.log(reporteTiemposDeEspera);
+    let segundoReporte = {
+        tiempoPromedioMinutos: Math.floor(reporteTiemposDeEspera[0].tiempoPromedio / 60),
+        tiempoPromedioSegundos: Math.floor(reporteTiemposDeEspera[0].tiempoPromedio % 60),
+        tiempoMaximoMinutos: Math.floor(reporteTiemposDeEspera[0].tiempoMaximo / 60),
+        tiempoMaximoSegundos: Math.floor(reporteTiemposDeEspera[0].tiempoMaximo % 60),
+        tiempoMinimoMinutos: Math.floor(reporteTiemposDeEspera[0].tiempoMinimo / 60),
+        tiempoMinimoSegundos: Math.floor(reporteTiemposDeEspera[0].tiempoMinimo % 60)
+    };
     const img = base64('favicon2.png');
-    res.render('index', {img, active: {Inicio: true }, color1: empresa!.color1, color2: empresa!.color2, reporteHorasPico: reporteFinalHorasPico, reporteTiemposDeEspera: reporteTiemposDeEspera[0]});
+    res.render('index', {img, active: {Inicio: true }, color1: empresa!.color1, color2: empresa!.color2, reporteHorasPico: reporteFinalHorasPico, reporteTiemposDeEspera: segundoReporte});
 });
 
 app.get('/inicio-de-sesion', (req: Request, res: Response) => {
