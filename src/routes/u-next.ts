@@ -92,21 +92,21 @@ app.get('/', [validarSesion], async (req: Request, res: Response) => {
         tiempoMinimoMinutos: (reporteTiemposDeEspera[0].tiempoMinimo / 60),
         tiempoMinimoSegundos: (reporteTiemposDeEspera[0].tiempoMinimo / 60)
     };
-    const img = base64('favicon2.png');
+    const img = base64(empresa!.imagenEmpresa);
     res.render('index', {img, active: {Inicio: true }, color1: empresa!.color1, color2: empresa!.color2, reporteHorasPico: reporteFinalHorasPico, reporteTiemposDeEspera: segundoReporte});
 });
 
 app.get('/configuracion', [validarSesion], async (req: Request, res: Response) => {
     const empresa = await Cuenta.findOne({ _id: req.session!.empresa });
     const imgConfiguracion = base64(empresa!.imagenEmpresa);
-    const img = base64('favicon2.png');
+    const img = base64(empresa!.imagenEmpresa);
     res.render('configuracion', {imgConfiguracion, img, active: {Configuracion: true }, color1: empresa!.color1, color2: empresa!.color2});
 });
 
 app.get('/escritorios', [validarSesion], async (req: Request, res: Response) => {
     const empresa = await Cuenta.findOne({ _id: req.session!.empresa });
     const escritorios = await Escritorio.find({ idCuenta: req.session!.empresa, activo: true });
-    const img = base64('favicon2.png');
+    const img = base64(empresa!.imagenEmpresa);
     res.render('escritorios', {img, active: {Escritorios: true }, escritorios, color1: empresa!.color1, color2: empresa!.color2});
 });
 
@@ -210,7 +210,7 @@ app.get('/index', [validarSesion], async (req: Request, res: Response) => {
         tiempoMinimoMinutos: Math.floor(reporteTiemposDeEspera[0].tiempoMinimo / 60),
         tiempoMinimoSegundos: Math.floor(reporteTiemposDeEspera[0].tiempoMinimo % 60)
     };
-    const img = base64('favicon2.png');
+    const img = base64(empresa!.imagenEmpresa);
     res.render('index', {img, active: {Inicio: true }, color1: empresa!.color1, color2: empresa!.color2, reporteHorasPico: reporteFinalHorasPico, reporteTiemposDeEspera: segundoReporte});
 });
 
@@ -242,7 +242,7 @@ app.post('/inicio-de-sesion', (req: Request, res: Response) => {
 
 app.get('/nuevo-ticket', [validarSesion], async (req: Request, res: Response) => {
     const empresa = await Cuenta.findOne({ _id: req.session!.empresa });
-    const img = base64('favicon2.png');
+    const img = base64(empresa!.imagenEmpresa);
     res.render('nuevo-ticket', {img, color1: empresa!.color1, color2: empresa!.color2});
 });
 
