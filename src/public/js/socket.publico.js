@@ -21,21 +21,23 @@ socket.on('connect', function () {
 
 socket.on('estadoActual', function (data) {
     console.log(data);
-    actualizaHTML(data.ultimos4);
+    actualizaHTML(data);
 });
 
 socket.on('ultimos4', function (data) {
-    console.log(data);
-    actualizaHTML(data.ultimos4);
+    console.log("data: ", data);
+    actualizaHTML(data);
 });
 
-function actualizaHTML(ultimos4) {
+function actualizaHTML(data) {
+    var ultimos4 = data.ultimos4;
+    var ultimos4Escritorios = data.ultimos4Escritorios;
     if(ultimos4.length > 0 && tablaTickets.hasClass('d-none')) {
         tablaTickets.removeClass('d-none');
         mensajeSinTickets.addClass('d-none');
     }
     for (var i = 0; i <= ultimos4.length - 1; i++) {
         lblTickets[i].text('Ticket ' + ultimos4[i].clave);
-        lblEscritorios[i].text('Escritorio ' + ultimos4[i].idEscritorio);
+        lblEscritorios[i].text('Escritorio ' + ultimos4Escritorios[i]);
     }
 }

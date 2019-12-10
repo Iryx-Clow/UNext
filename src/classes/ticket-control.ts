@@ -1,4 +1,5 @@
 import Turno from '../models/turno';
+import Escritorio from '../models/escritorio';
 
 export class Ticket {
 
@@ -17,6 +18,7 @@ export class TicketControl {
     private _ultimo: number;
     private _tickets: Ticket[];
     private _ultimos4: Ticket[];
+    private _ultimos4Escritorios: string[];
     private _promedioTiempo: number;
     private _tiempoTotal: number;
 
@@ -24,6 +26,7 @@ export class TicketControl {
         this._ultimo = 0;
         this._tickets = [];
         this._ultimos4 = [];
+        this._ultimos4Escritorios = [];
         this._tiempoTotal = 0;
         this._promedioTiempo = 0;
     }
@@ -34,6 +37,10 @@ export class TicketControl {
 
     public get ultimos4(): Ticket[] {
         return this._ultimos4;
+    }
+
+    public get ultimos4Escritorios(): string[] {
+        return this._ultimos4Escritorios;
     }
 
     public get empresa(): string {
@@ -51,7 +58,7 @@ export class TicketControl {
         return clave - this._ultimos4[0].clave;
     }
 
-    public async getSiguiente(): Promise<number> {
+    public async getSiguiente(): Promise<Ticket | number> {
         try {
             if (this._ultimo === -1) {
                 return -1;
@@ -74,7 +81,7 @@ export class TicketControl {
                 turnoDB.tiempo
             );
             this._tickets.push(ticket);
-            return ticket.clave;
+            return ticket;
         } catch (err) {
             return -1;
         }
@@ -102,6 +109,8 @@ export class TicketControl {
             if (!turnoDB) {
                 return 'Error al atender ticket, contacte al equipo de soporte';
             }
+            let escritorioDB = await Escritorio.findOne({ _id: escritorio });
+            this._ultimos4Escritorios.unshift(escritorioDB!.nombre);
             this._ultimos4.unshift(atenderTicket);
             if (this._ultimos4.length > 4) {
                 this._ultimos4.pop();
@@ -138,6 +147,10 @@ export class TicketControl {
                 this._tiempoTotal += ticket.tiempo || 0;
             });
             this._ultimos4 = this._ultimos4.splice(0, 4);
+            this._ultimos4.forEach(async (ultimo) => {
+                let escritorioDB = await Escritorio.findOne({ _id: ultimo.idEscritorio });
+                this._ultimos4Escritorios.push(escritorioDB!.nombre);
+            });
             ticketsPendientes.forEach(ticket => {
                 let nuevoTicket = new Ticket(
                     ticket._id,
