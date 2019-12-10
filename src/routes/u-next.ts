@@ -4,6 +4,7 @@ import path from 'path';
 import handlebars from 'hbs';
 import Cuenta from '../models/cuenta';
 import Escritorio from '../models/escritorio';
+import Turno from '../models/turno';
 import { ICuenta } from "../models/cuenta";
 import { validarSesion } from '../middlewares/middlewares';
 
@@ -22,13 +23,13 @@ app.get('/configuracion', [validarSesion], async (req: Request, res: Response) =
     const empresa = await Cuenta.findOne({ _id: req.session!.empresa });
     const imgConfiguracion = base64(empresa!.imagenEmpresa);
     const img = base64('favicon2.png');
-    res.render('configuracion', {imgConfiguracion, img, active: {Configuracion: true }});
+    res.render('configuracion', { imgConfiguracion, img, active: { Configuracion: true } });
 });
 
 app.get('/escritorios', [validarSesion], async (req: Request, res: Response) => {
     const escritorios = await Escritorio.find({ idCuenta: req.session!.empresa, activo: true });
     const img = base64('favicon2.png');
-    res.render('escritorios', {img, active: {Escritorios: true }, escritorios});
+    res.render('escritorios', { img, active: { Escritorios: true }, escritorios });
 });
 
 
@@ -49,18 +50,18 @@ app.get('/escritorio', [validarSesion], async (req: Request, res: Response) => {
         const empresa = await Cuenta.findOne({ _id: escritorio.idCuenta });
         const img = base64(empresa!.imagenEmpresa);
         const nombreEscritorio = escritorio.nombre;
-        res.render('escritorio', {img, nombreEscritorio});
+        res.render('escritorio', { img, nombreEscritorio });
     }
 });
 
 app.get('/index', [validarSesion], (req: Request, res: Response) => {
     const img = base64('favicon2.png');
-    res.render('index', {img, active: {Inicio: true }});
+    res.render('index', { img, active: { Inicio: true } });
 });
 
 app.get('/inicio-de-sesion', (req: Request, res: Response) => {
     const img = base64('favicon2.png');
-    res.render('inicio-de-sesion', {img});
+    res.render('inicio-de-sesion', { img });
 });
 
 app.post('/inicio-de-sesion', (req: Request, res: Response) => {
@@ -86,16 +87,42 @@ app.post('/inicio-de-sesion', (req: Request, res: Response) => {
 
 app.get('/nuevo-ticket', [validarSesion], (req: Request, res: Response) => {
     const img = base64('favicon2.png');
-    res.render('nuevo-ticket', {img});
+    res.render('nuevo-ticket', { img });
 });
 
 app.get('/publico', [validarSesion], (req: Request, res: Response) => {
     res.render('publico');
 });
 
-app.get('/detalles-ticket', (req: Request, res: Response) => {
-    const img = base64('favicon2.png');
-    res.render('detalles-ticket', {img});
+app.get('/detalles-ticket', async (req: Request, res: Response) => {
+    const idEmpresa = req.query.idEmpresa;
+    const idTicket = req.query.idTicket;
+    if (idEmpresa && idTicket) {
+        try {
+            const empresa = await Cuenta.findOne({ _id: idEmpresa });
+            const ticket = await Turno.findOne({ _id: idTicket, idCuenta: idEmpresa });
+            if (empresa && ticket) {
+                const img = base64(empresa.imagenEmpresa);
+                const numeroTicket = ticket.clave;
+                res.render('detalles-ticket', { img, numeroTicket });
+                return;
+            }
+        } catch (err) {
+            res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
+            res.write(`
+            <h3> Hubo un error con la URL, verifique que su dispositivo escaneo correctamente el código QR, si está seguro
+            de que el escaneo fue correcto, favor de reportar al equipo de soporte</h3>
+            `);
+            res.end();
+            return;
+        }
+    }
+    res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
+    res.write(`
+    <h3> Hubo un error con la URL, verifique que su dispositivo escaneo correctamente el código QR, si está seguro
+    de que el escaneo fue correcto, favor de reportar al equipo de soporte</h3>
+    `);
+    res.end();
 });
 
 export = app;

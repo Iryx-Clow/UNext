@@ -18,7 +18,31 @@ export const entrarEmpresa = (cliente: Socket, io: Server) => {
         await ticketControl.inicializar();
         let dataActual = {
             actual: ticketControl.ultimoTicket,
-            ultimos4: ticketControl.ultimos4
+            ultimos4: ticketControl.ultimos4,
+            promedioTiempo: ticketControl.promedioTiempo
+        };
+        callback({ message: `Conectado a la empresa ${empresa}` });
+        io.to(empresa).emit('estadoActual', dataActual);
+    });
+}
+
+export const entrarEmpresaByIdEmpresa = (cliente: Socket, io: Server) => {
+    cliente.on('entrarEmpresaByIdEmpresa', async (data, callback: Function) => {
+        let empresa: string = data.idEmpresa;
+        if (!empresa) {
+            return callback({
+                err: true,
+                message: 'Error, necesita iniciar sesión con un usuario válido'
+            });
+        }
+        cliente.join(empresa);
+        ticketControlList.nuevaEmpresa(empresa);
+        let ticketControl = ticketControlList.getTicketsEmpresa(empresa);
+        await ticketControl.inicializar();
+        let dataActual = {
+            actual: ticketControl.ultimoTicket,
+            ultimos4: ticketControl.ultimos4,
+            promedioTiempo: ticketControl.promedioTiempo
         };
         callback({ message: `Conectado a la empresa ${empresa}` });
         io.to(empresa).emit('estadoActual', dataActual);
@@ -56,13 +80,15 @@ export const atenderTicket = (cliente: Socket) => {
         let ticketControl = ticketControlList.getTicketsEmpresa(empresa);
         let atenderTicket: Ticket | string;
         let ultimos4: Ticket[] = [];
+        let promedioTiempo = 0;
         if (!ticketControl) {
             atenderTicket = 'No hay tickets';
         } else {
             atenderTicket = await ticketControl.atenderTicket(data.escritorio);
             ultimos4 = ticketControl.ultimos4;
+            promedioTiempo = ticketControl.promedioTiempo;
         }
         callback(atenderTicket);
-        cliente.broadcast.to(empresa).emit('ultimos4', { ultimos4 });
+        cliente.broadcast.to(empresa).emit('ultimos4', { ultimos4, promedioTiempo });
     });
 }

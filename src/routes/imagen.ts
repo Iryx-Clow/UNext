@@ -1,4 +1,4 @@
-import { borrarArchivo, base64 } from '../tools/tools';
+import { borrarArchivo } from '../tools/tools';
 import { verificarImagen } from '../middlewares/middlewares';
 import fileUpload, { UploadedFile } from 'express-fileupload';
 import path from 'path';

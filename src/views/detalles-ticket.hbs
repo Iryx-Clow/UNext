@@ -13,10 +13,10 @@
                             <div class="pl-md-4 col-md-8 col-12 mt-3 mt-md-0 d-flex align-items-center">
                                 <div class="w-100">
                                     <h1 class="h3 mb-3 font-weight-normal" id="lblDetallesTicket">
-                                        Ticket 845
+                                        Ticket {{ numeroTicket }}
                                     </h1>
-                                    <p>El turno <b>831</b> esta siendo atendido.</p>
-                                    <p>Aproximadamente en <b>27 minutos</b> seguirá tu turno.</p>
+                                    <p id="turnoActual"></p>
+                                    <p id="tiempoFaltante"></p>
                                 </div>
                             </div>
                         </div>
@@ -25,5 +25,10 @@
             </div>
         </div>
         {{> scripts}}
+        <script>
+            var numeroTicket = {{ numeroTicket }};
+        </script>
+        <script src="socket.io/socket.io.js"></script>
+        <script src="js/socket.detalles-ticket.js"></script>
     </body>
 </html>
