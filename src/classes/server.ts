@@ -45,6 +45,7 @@ export default class Server {
     private escucharSockets(): void {
         this.io.on('connection', cliente => {
             socket.entrarEmpresa(cliente, this.io);
+            socket.entrarEmpresaByIdEmpresa(cliente, this.io);
             socket.siguienteTicket(cliente, this.io);
             socket.atenderTicket(cliente);
         });
