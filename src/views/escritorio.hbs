@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     {{> head title='Escritorio'}}
-    <body class="bg-main-color">
+    <body class="bg-color-1">
         <div class="wrapper h-100">
             <div id="content" class="d-flex align-items-center pb-5 pt-5 h-100 text-center">
                 <div class="responsive-card">
@@ -18,7 +18,7 @@
                                     <p class="font-weight-normal">
                                         <span id="ticketEnAtencion">No se esta atendiendo a ningún ticket</span><b id="numeroDeTicketEnAtencion"></b>
                                     </p>
-                                    <button class="btn btn-lg btn-warning btn-block">
+                                    <button class="btn btn-lg bg-color-2 btn-block">
                                         Atender siguiente ticket
                                     </button>
                                 </div>
@@ -29,6 +29,18 @@
             </div>
         </div>
         {{> scripts}}
+        <script>
+            var i;
+            var color1 = document.getElementsByClassName('bg-color-1');
+            for (i = 0; i < color1.length; i++) {
+                color1[i].style.backgroundColor = '{{color1}}';
+            }
+            var color2 = document.getElementsByClassName('bg-color-2');
+            var j;
+            for (j = 0; j < color2.length; j++) {
+                color2[j].style.backgroundColor = '{{color2}}';
+            }
+        </script>
         <script src="socket.io/socket.io.js"></script>
         <script src="js/socket.escritorio.js"></script>
     </body>

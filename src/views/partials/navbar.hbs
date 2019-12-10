@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-main-color fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark bg-color-1 fixed-top">
     <a class="navbar-brand" href="/index">
         <img src="{{ img }}" width="30" height="30" alt="">
     </a>
@@ -24,4 +24,16 @@
             </li>
         </ul>
     </div>
+    <script>
+        var i;
+        var color1 = document.getElementsByClassName('bg-color-1');
+        for (i = 0; i < color1.length; i++) {
+            color1[i].style.backgroundColor = '{{color1}}';
+        }
+        var color2 = document.getElementsByClassName('bg-color-2');
+        var j;
+        for (j = 0; j < color2.length; j++) {
+            color2[j].style.backgroundColor = '{{color2}}';
+        }
+    </script>
 </nav>

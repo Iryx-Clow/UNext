@@ -27,6 +27,12 @@ body.padding-top-fix {
     font-size: 0.75rem;;
 }
 
+.responsive-sm-card {
+    width: 100%;
+    max-width: 330px;
+    margin: auto;
+}
+
 .responsive-card {
     width: 100%;
     max-width: 660px;
